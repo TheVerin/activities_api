@@ -1,9 +1,5 @@
-from django.db.models import (
-    CharField,
-    Model,
-    DateTimeField,
-    DecimalField,
-)
+from django.db.models import CharField, DateTimeField, DecimalField, Model
+
 
 STATUSES = [
     ("A", "A"),
@@ -13,7 +9,7 @@ STATUSES = [
 
 
 class Activity(Model):
-    id = CharField(max_length=20, editable=False, unique=True)
+    id = CharField(max_length=20, editable=False, unique=True, primary_key=True)
     activity_date = DateTimeField()
     track_id = CharField(max_length=10)
     status = CharField(max_length=1, choices=STATUSES, blank=True)

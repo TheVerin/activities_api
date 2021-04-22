@@ -1,12 +1,12 @@
 from decimal import Decimal
 
-from django.test import TestCase
 from django.db.utils import IntegrityError
+from django.test import TestCase
 
 from activity.models import Activity
 
 
-class EntryModelTest(TestCase):
+class ActivityModelTest(TestCase):
     def test_valid_car_model(self):
         entry = Activity.objects.create(
             id="X13200000Z",
@@ -15,7 +15,7 @@ class EntryModelTest(TestCase):
             status="S",
             billing_amount=Decimal(10.54),
         )
-        self.assertEqual(str(entry), "Brand Model AAA 4455")
+        self.assertEqual(str(entry), "X13200000Z T123456 S")
 
     def test_car_model_no_data(self):
         try:
@@ -41,7 +41,7 @@ class EntryModelTest(TestCase):
                 status=1,
                 billing_amount="Z",
             )
-        except IntegrityError:
+        except TypeError:
             self.assertTrue(True)
 
     def test_create_activity_with_the_same_id(self):
