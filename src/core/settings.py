@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "health_check.contrib.migrations",
     "health_check.contrib.psutil",
     # project apps
+    "activity",
 ]
 
 SITE_ID = 1
