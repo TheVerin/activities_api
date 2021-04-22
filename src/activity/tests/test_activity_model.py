@@ -13,7 +13,7 @@ class ActivityModelTest(TestCase):
             activity_date="2021-04-16T08:05:35.941465",
             track_id="T123456",
             status="S",
-            billing_amount=Decimal(10.54),
+            billig_amount=Decimal(10.54),
         )
         self.assertEqual(str(entry), "X13200000Z T123456 S")
 
@@ -39,7 +39,7 @@ class ActivityModelTest(TestCase):
                 activity_date=1,
                 track_id=1,
                 status=1,
-                billing_amount="Z",
+                billig_amount="Z",
             )
         except TypeError:
             self.assertTrue(True)
@@ -51,14 +51,14 @@ class ActivityModelTest(TestCase):
                 activity_date="2021-04-16T08:05:35.941465",
                 track_id="T123456",
                 status="S",
-                billing_amount=Decimal(10.54),
+                billig_amount=Decimal(10.54),
             )
             Activity.objects.create(
                 id="X13200000Z",
                 activity_date="2021-04-15T08:05:35.941465",
                 track_id="T123457",
                 status="A",
-                billing_amount=Decimal(10.55),
+                billig_amount=Decimal(10.55),
             )
         except IntegrityError:
             self.assertTrue(True)
@@ -70,7 +70,7 @@ class ActivityModelTest(TestCase):
                 activity_date="2021-04-16T08:05:35.941465",
                 track_id="T123456",
                 status="T",
-                billing_amount=Decimal(10.54),
+                billig_amount=Decimal(10.54),
             )
         except IntegrityError:
             self.assertTrue(True)
