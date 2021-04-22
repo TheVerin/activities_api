@@ -1,8 +1,7 @@
 import os
 from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 from typing import List
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -148,4 +147,27 @@ if DEBUG:
 HEALTH_CHECK = {
     "DISK_USAGE_MAX": 90,
     "MEMORY_MIN": 150,
+}
+
+# Logging
+default_log_level = "DEBUG" if DEBUG else "INFO"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "root": {"level": default_log_level, "handlers": ["console"]},
+    "handlers": {
+        "console": {
+            "level": default_log_level,
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        }
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "ERROR",
+            "handlers": ["console"],
+            "propagate": False,
+        },
+        "django": {"level": "WARNING", "handlers": ["console"], "propagate": True},
+    },
 }
