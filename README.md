@@ -1,8 +1,8 @@
-# Taxlio CarAPI
+# Butter ActivityAPI
 
 Hi,
 
-I would like to show you my version of ActivitiesAPI app.
+I would like to show you my version of ActivityAPI app.
 
 
 If you want to run the application locally you will need a few things:
