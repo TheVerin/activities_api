@@ -34,6 +34,12 @@ INSTALLED_APPS = [
     "csvexport",
     "drf_yasg",
     "rest_framework",
+    # health check
+    "health_check",
+    "health_check.db",
+    "health_check.storage",
+    "health_check.contrib.migrations",
+    "health_check.contrib.psutil",
     # project apps
 ]
 
@@ -137,3 +143,9 @@ if DEBUG:
 
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     MEDIA_URL = "/media/"
+
+# Health check
+HEALTH_CHECK = {
+    "DISK_USAGE_MAX": 90,
+    "MEMORY_MIN": 150,
+}
