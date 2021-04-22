@@ -160,7 +160,6 @@ LOGGING = {
         "console": {
             "level": default_log_level,
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
         }
     },
     "loggers": {
