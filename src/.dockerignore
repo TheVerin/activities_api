@@ -1,0 +1,15 @@
+.gitignore
+Makefile
+README.md
+docker-compose.yml
+Dockerfile
+.env
+.coverage
+.venv/*
+celerybeat-schedule
+
+# Static and Media files
+*/staticfiles
+*/static
+*/mediafiles
+*/media

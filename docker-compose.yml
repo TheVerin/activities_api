@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  base: &base
+    build: ./src/
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static:/static
+      - media:/media
+    depends_on:
+      - django
+
+  django:
+    <<: *base
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/src
+      - static:/src/static
+      - media:/src/media
+    command: sh /src/start.sh
+
+  db:
+    image: postgres:11-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+  static:
+  media:
