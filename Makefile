@@ -15,7 +15,8 @@ setup:
 
 # Set up containers on dev settings then test and if tests pass stop and remove all containers.
 test:
-	docker-compose run --rm django coverage run --source='.' manage.py test && black --check --diff . && flake8 && mypy .
+	docker-compose run --rm django coverage run --source='.' manage.py test
+	docker-compose run --rm django coverage report -m
 
 # Remove running containers
 remove:
@@ -24,7 +25,11 @@ remove:
 # Format code
 format:
 	docker-compose run --rm django black .
+	docker-compose run --rm django isort --atomic .
 
 # Run linter
 lint:
-	docker-compose run --rm django black --check --diff . && flake8 && mypy .
+	docker-compose run --rm django black --check --diff .
+	docker-compose run --rm django flake8
+	docker-compose run --rm django isort -c --diff .
+	docker-compose run --rm django mypy .
