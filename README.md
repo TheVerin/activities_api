@@ -2,7 +2,7 @@
 
 Hi,
 
-I would like to show you my version of CarAPI app.
+I would like to show you my version of ActivitiesAPI app.
 
 
 If you want to run the application locally you will need a few things:
