@@ -6,10 +6,7 @@ from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from rest_framework.test import APIClient
 
-from activity.exceptions.activity_exceptions import (
-    CannotCalculateAmount,
-    TrackIDDoesNotExists,
-)
+from activity.exceptions.activity_exceptions import TrackIDDoesNotExists
 from activity.models import Activity
 from activity.tools.aggregators import activity_aggregator
 
