@@ -19,6 +19,7 @@ urlpatterns = (
     [
         path("admin/", admin.site.urls),
         path("v1/", include("core.v1_urls")),
+        path("health/", include("health_check.urls")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
