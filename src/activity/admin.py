@@ -12,6 +12,6 @@ class ActivityAdmin(ModelAdmin):
         "track_id",
         "status",
     )
-    ordering = ("activity_date", "billing_amount")
+    ordering = ("activity_date", "billig_amount")
     search_fields = ("^id", "^track_id")
     actions = (csvexport,)

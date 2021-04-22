@@ -23,9 +23,9 @@ class ActivityAggregator:
         for activity in activities[::-1]:
             try:
                 if activity.status == "S":
-                    amount = amount + Decimal(activity.billing_amount)
+                    amount = amount + Decimal(activity.billig_amount)
                 elif activity.status == "R":
-                    amount = amount - Decimal(activity.billing_amount)
+                    amount = amount - Decimal(activity.billig_amount)
                 else:
                     continue
             except InvalidOperation:
