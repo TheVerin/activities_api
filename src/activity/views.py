@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
@@ -8,6 +9,7 @@ from activity.exceptions.activity_exceptions import (
     TrackIDDoesNotExists,
 )
 from activity.models import Activity
+from activity.serializers import ActivityAggregateSerializer
 from activity.tools.aggregators import activity_aggregator
 
 
@@ -17,6 +19,7 @@ class ActivityRetrieveView(APIView):
             "-activity_date"
         )
 
+    @swagger_auto_schema(responses={200: ActivityAggregateSerializer})
     def get(self, request: Request, **kwargs) -> Response:
         track_id = kwargs["track_id"]
         try:
