@@ -7,7 +7,7 @@ from activity.models import Activity
 
 
 class ActivityModelTest(TestCase):
-    def test_valid_car_model(self):
+    def test_valid_activity_model(self):
         entry = Activity.objects.create(
             id="X13200000Z",
             activity_date="2021-04-16T08:05:35.941465",
@@ -17,7 +17,7 @@ class ActivityModelTest(TestCase):
         )
         self.assertEqual(str(entry), "X13200000Z T123456 S")
 
-    def test_car_model_no_data(self):
+    def test_activity_model_no_data(self):
         try:
             Activity.objects.create()
         except IntegrityError:

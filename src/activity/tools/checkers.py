@@ -13,6 +13,16 @@ class ActivityChecker:
             if self.check_possibility_to_save(data=activity)
         ]
 
+    def check_possibility_to_save(self, data: dict) -> bool:
+        try:
+            if Activity.objects.filter(id=data["id"]).exists() or not self._check_types(
+                data=data
+            ):
+                return False
+            return True
+        except (KeyError, ValueError):
+            return False
+
     @staticmethod
     def _check_unique_activities(activities: list) -> list:
         ids = []
@@ -25,16 +35,6 @@ class ActivityChecker:
                 ids.append(activity["id"])
 
         return unique_activities
-
-    def check_possibility_to_save(self, data: dict) -> bool:
-        try:
-            if Activity.objects.filter(id=data["id"]).exists() or not self._check_types(
-                data=data
-            ):
-                return False
-            return True
-        except (KeyError, ValueError):
-            return False
 
     @staticmethod
     def _check_types(data: dict) -> bool:
