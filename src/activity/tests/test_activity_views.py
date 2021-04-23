@@ -90,8 +90,34 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(response.status_code, HTTP_201_CREATED)
         self.assertEqual(from_db.track_id, payload["track_id"])
 
+    def test_create_store_last_id_state_from_payload(self):
+        payload = [
+            {
+                "id": "100",
+                "activity_date": "2021-04-16T09:14:16.435742",
+                "track_id": "TRACK_ID_3",
+                "status": "A",
+                "billig_amount": 30,
+            },
+            {
+                "id": "100",
+                "activity_date": "2021-04-16T09:14:17.435742",
+                "track_id": "TRACK_ID_4",
+                "status": "S",
+                "billig_amount": 35,
+            },
+        ]
+        response = self.client.post(
+            reverse(self.create_view),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+        from_db = Activity.objects.filter(id=payload[-1]["id"]).latest("activity_date")
+        self.assertEqual(response.status_code, HTTP_201_CREATED)
+        self.assertEqual(from_db.track_id, payload[-1]["track_id"])
+
     def test_create_multiple_activities(self):
-        with open("/src/activity/tests/activities.json") as payload_file:
+        with open("/src/activity/tests/json_files/activities.json") as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
@@ -106,7 +132,9 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(activities_count_before, activities_count_after - len(payload))
 
     def test_create_duplicated_activities(self):
-        with open("/src/activity/tests/activities_duplicated.json") as payload_file:
+        with open(
+            "/src/activity/tests/json_files/activities_duplicated.json"
+        ) as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
@@ -121,7 +149,9 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(activities_count_before, activities_count_after - 30)
 
     def test_create_1000_activities(self):
-        with open("/src/activity/tests/activities_1000.json") as payload_file:
+        with open(
+            "/src/activity/tests/json_files/activities_1000.json"
+        ) as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
