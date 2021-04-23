@@ -22,8 +22,6 @@ class ActivityAggregator:
                 amount = amount + Decimal(activity.billig_amount)
             elif activity.status == "R":
                 amount = amount - Decimal(activity.billig_amount)
-            else:
-                continue
         return {
             "track_id": track_id,
             "last_status": last_status,
