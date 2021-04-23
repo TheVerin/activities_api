@@ -1,12 +1,9 @@
 import logging
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 
 from django.db.models import QuerySet
 
-from activity.exceptions.activity_exceptions import (
-    CannotCalculateAmount,
-    TrackIDDoesNotExists,
-)
+from activity.exceptions.activity_exceptions import TrackIDDoesNotExists
 
 
 class ActivityAggregator:
@@ -21,16 +18,12 @@ class ActivityAggregator:
 
         amount = Decimal(0.0)
         for activity in activities[::-1]:
-            try:
-                if activity.status == "S":
-                    amount = amount + Decimal(activity.billig_amount)
-                elif activity.status == "R":
-                    amount = amount - Decimal(activity.billig_amount)
-                else:
-                    continue
-            except InvalidOperation:
-                logging.error(f"Cannot count amount for {activity.track_id}")
-                raise CannotCalculateAmount
+            if activity.status == "S":
+                amount = amount + Decimal(activity.billig_amount)
+            elif activity.status == "R":
+                amount = amount - Decimal(activity.billig_amount)
+            else:
+                continue
         return {
             "track_id": track_id,
             "last_status": last_status,

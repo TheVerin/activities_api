@@ -91,7 +91,7 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(from_db.track_id, payload["track_id"])
 
     def test_create_multiple_activities(self):
-        with open("/src/activity/tests/activities.json") as payload_file:
+        with open("/src/activity/tests/json_files/activities.json") as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
@@ -106,7 +106,9 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(activities_count_before, activities_count_after - len(payload))
 
     def test_create_duplicated_activities(self):
-        with open("/src/activity/tests/activities_duplicated.json") as payload_file:
+        with open(
+            "/src/activity/tests/json_files/activities_duplicated.json"
+        ) as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
@@ -121,7 +123,9 @@ class ActivityViewsTest(TestCase):
         self.assertEqual(activities_count_before, activities_count_after - 30)
 
     def test_create_1000_activities(self):
-        with open("/src/activity/tests/activities_1000.json") as payload_file:
+        with open(
+            "/src/activity/tests/json_files/activities_1000.json"
+        ) as payload_file:
             payload = json.loads(payload_file.read())
 
         activities_count_before = Activity.objects.count()
