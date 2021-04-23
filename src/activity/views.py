@@ -17,6 +17,7 @@ from activity.exceptions.activity_exceptions import (
 from activity.models import Activity
 from activity.serializers import ActivityAggregateSerializer, ActivitySerializer
 from activity.tools.aggregators import activity_aggregator
+from activity.tools.checkers import activity_checker
 
 
 class ActivityRetrieveView(APIView):
@@ -58,19 +59,19 @@ class ActivityCreateView(CreateAPIView):
             output_data = [
                 self._perform_create(data=activity)
                 for activity in activities
-                if not Activity.objects.filter(id=activity["id"]).exists()
+                if activity_checker.check_possibility_to_save(data=activity)
             ]
             if len(output_data) == 0:
                 return Response(
-                    {"message": "All activities are already in db"},
+                    {"message": "Cannot store any activity"},
                     HTTP_400_BAD_REQUEST,
                 )
             else:
                 return Response(output_data, HTTP_201_CREATED)
         else:
-            if Activity.objects.filter(id=activities["id"]).exists():
+            if not activity_checker.check_possibility_to_save(data=activities):
                 return Response(
-                    {"message": f"Activity {activities['id']} already in db"},
+                    {"message": "Cannot store any activity"},
                     HTTP_400_BAD_REQUEST,
                 )
             output_data = [self._perform_create(data=activities)]
@@ -80,7 +81,7 @@ class ActivityCreateView(CreateAPIView):
         serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        return serializer.data
+            return serializer.data
 
 
 activity_create_view = ActivityCreateView.as_view()
