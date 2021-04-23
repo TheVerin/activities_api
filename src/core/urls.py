@@ -1,3 +1,5 @@
+from typing import List
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -14,7 +16,7 @@ schema_view = get_schema_view(
     permission_classes=(AllowAny,),
 )
 
-urlpatterns = (
+urlpatterns: List[path] = (
     [
         path("admin/", admin.site.urls),
         path("v1/", include("core.v1_urls")),

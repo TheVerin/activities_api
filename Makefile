@@ -12,15 +12,19 @@ setup:
 	docker-compose exec django python manage.py migrate
 	docker-compose exec django python manage.py collectstatic
 
-
-# Set up containers on dev settings then test and if tests pass stop and remove all containers.
-test:
-	docker-compose run --rm django coverage run --source='.' manage.py test
-	docker-compose run --rm django coverage report -m
-
 # Remove running containers
 remove:
 	docker-compose down -v
+
+# Set up containers on dev settings then test and if tests pass stop and remove all containers.
+test:
+	make remove
+	docker-compose up -d --build
+	docker-compose exec django python manage.py makemigrations
+	docker-compose exec django python manage.py migrate
+	docker-compose exec django coverage run --source='.' manage.py test
+	docker-compose exec django coverage report -m
+	make remove
 
 # Format code
 format:
