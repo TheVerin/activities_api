@@ -23,7 +23,7 @@ class ActivityRetrieveView(APIView):
             "-activity_date"
         )
 
-    @swagger_auto_schema(responses={200: ActivityAggregateSerializer})
+    @swagger_auto_schema(responses={200: ActivityAggregateSerializer, 404: "Not found"})
     def get(self, request: Request, **kwargs) -> Response:
         track_id = kwargs["track_id"]
         try:
@@ -41,11 +41,11 @@ class ActivityRetrieveView(APIView):
 activity_retrieve_view = ActivityRetrieveView.as_view()
 
 
-class ActivityCreateView(CreateAPIView):
-    queryset = Activity.objects.all()
-    serializer_class = ActivitySerializer
+class ActivityCreateView(APIView):
 
-    def create(self, request: Request, *args, **kwargs) -> Response:
+    @swagger_auto_schema(request_body=ActivitySerializer, responses={201: "Created", 400: "Bad "
+                                                                                      "Request"})
+    def post(self, request: Request) -> Response:
         activities = request.data
         if isinstance(activities, list):
             unique_activities = (
@@ -71,7 +71,7 @@ class ActivityCreateView(CreateAPIView):
             return Response(status=HTTP_201_CREATED)
 
     def _perform_create(self, data: dict):
-        serializer = self.get_serializer(data=data)
+        serializer = ActivitySerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
