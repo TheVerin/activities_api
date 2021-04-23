@@ -1,5 +1,4 @@
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.generics import CreateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -42,9 +41,10 @@ activity_retrieve_view = ActivityRetrieveView.as_view()
 
 
 class ActivityCreateView(APIView):
-
-    @swagger_auto_schema(request_body=ActivitySerializer, responses={201: "Created", 400: "Bad "
-                                                                                      "Request"})
+    @swagger_auto_schema(
+        request_body=ActivitySerializer,
+        responses={201: "Created", 400: "Bad " "Request"},
+    )
     def post(self, request: Request) -> Response:
         activities = request.data
         if isinstance(activities, list):

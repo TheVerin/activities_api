@@ -17,7 +17,7 @@ class ActivityChecker:
     def _check_unique_activities(activities: list) -> list:
         ids = []
         unique_activities = []
-        for activity in activities:
+        for activity in activities[::-1]:
             if activity["id"] in ids:
                 continue
             else:
