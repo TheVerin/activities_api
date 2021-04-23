@@ -24,9 +24,9 @@ OK, hardest thing behind us.
 
 Now clone the repo by:
 
-SSH -> git clone git@github.com:TheVerin/talixo_cars.git
+SSH -> git clone git@github.com:TheVerin/activities_api.git
 
-HTTPS -> https://github.com/TheVerin/talixo_cars.git
+HTTPS -> https://github.com/TheVerin/activities_api.git
 
 
 Great
